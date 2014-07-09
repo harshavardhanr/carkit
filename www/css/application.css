@@ -1,13 +1,15 @@
+body {
+  background-color: black; }
+
 .image-view {
-  background-color: #eee;
   text-align: center; }
   .image-view img {
     width: auto;
     height: 100%;
     max-width: 100%; }
 
-.video-view {
-  background-color: red; }
+.video-view, .image-view {
+  position: fixed !important; }
 
 .ui-resizable-handle {
   background: none !important; }

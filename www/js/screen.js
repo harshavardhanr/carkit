@@ -1,20 +1,12 @@
 var Canvas = Backbone.View.extend({
-  initialize: function() {
-  },
-
   render: function() {
     return this;
   },
 
   addChild: function(childView){
-    console.log(this);
     this.$el.append(childView.render().el);
   }
 });
-
-
-
-
 
 var VideoView = Backbone.View.extend({
   className: 'video-view',
@@ -104,17 +96,40 @@ $(function(){
     el: $('body')
   }).render();
 
-  canvas.addChild(new ImageView({
+  var images = [
+    'images/image1.svg',
+    'images/image2.svg'
+  ];
+
+  var currentImage = 0;
+
+  var imageView = new ImageView({
     width:  200,
     height: 200,
-    src:    'images/image1.svg'
-  }));
+    src:    images[0]
+  });
 
-  canvas.addChild(new VideoView({
+  var videoView = new VideoView({
     width:  300,
     height: 300,
     src:    'videos/small.mp4'
-  }));
+  });
+
+  canvas.addChild(imageView);
+  canvas.addChild(videoView);
+
+  var socket = io.connect('http://localhost:8080');
+
+  socket.on('video:play', function (data) {
+    videoView.play();
+  });
+
+
+
+  socket.on('image:switch', function (data) {
+    currentImage = (currentImage + 1) % images.length;
+    imageView.setSrc(images[currentImage]);
+  });
 
 
 });

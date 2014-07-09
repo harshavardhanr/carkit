@@ -1,5 +1,8 @@
+body {
+  background-color: black;
+}
 .image-view {
-  background-color: #eee;
+  // background-color: white;
   text-align: center;
   img {
     width: auto;
@@ -8,8 +11,13 @@
   }
 }
 
+.video-view,
+.image-view {
+  position: fixed !important;
+}
+
 .video-view {
-  background-color: red;
+  // background-color: red;
 }
 
 // jQuery UI overrides
