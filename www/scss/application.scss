@@ -1,0 +1,18 @@
+.image-view {
+  background-color: #eee;
+  text-align: center;
+  img {
+    width: auto;
+    height: 100%;
+    max-width: 100%;
+  }
+}
+
+.video-view {
+  background-color: red;
+}
+
+// jQuery UI overrides
+.ui-resizable-handle {
+  background: none !important;
+}

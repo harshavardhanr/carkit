@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="2608px" height="588px" viewBox="0 0 2608 588" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.0.3 (7891) - http://www.bohemiancoding.com/sketch -->
+    <title>Artboard 2</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Artboard-2" sketch:type="MSArtboardGroup" transform="translate(0.000000, 0.000000)">
+            <text id="Turn-left--13m" sketch:type="MSTextLayer" font-family="Lucida Sans" font-size="120" font-weight="normal" fill="#2DD7FF">
+                <tspan x="882.267654" y="500.6875">Turn left  13m</tspan>
+            </text>
+            <path d="M1022.17055,158.518349 L1022.17055,115 L844,204.5 L1022.17055,294 L1022.17055,250.481651 L1725,250.481651 L1725,158.518349 L1022.17055,158.518349 Z" id="Triangle-1" stroke="#2DD7FF" stroke-width="9" sketch:type="MSShapeGroup"></path>
+            <rect id="Rectangle-2" fill="#2DD7FF" sketch:type="MSShapeGroup" x="1207" y="160" width="522" height="89"></rect>
+        </g>
+    </g>
+</svg>
