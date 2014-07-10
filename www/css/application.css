@@ -11,5 +11,8 @@ body {
 .video-view, .image-view {
   position: fixed !important; }
 
+.edit-mode .video-view, .edit-mode .image-view {
+  background-color: #ccc; }
+
 .ui-resizable-handle {
   background: none !important; }

@@ -14,7 +14,13 @@ body {
 .video-view,
 .image-view {
   position: fixed !important;
-  background-color: #ccc;
+}
+
+.edit-mode {
+  .video-view,
+  .image-view {
+    background-color: #ccc;
+  }
 }
 
 .video-view {

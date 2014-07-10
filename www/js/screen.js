@@ -5,6 +5,10 @@ function logFrame(el){
   console.log('w:', el.css('width'), 'h:', el.css('height'), 't:', el.css('top'), 'l:', el.css('left'));
 }
 
+window.toggleEditMode = function (){
+  $('body').toggleClass('edit-mode');
+}
+
 //
 // Canvas is the main view container 
 //
