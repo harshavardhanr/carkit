@@ -1,3 +1,9 @@
+//
+// Helper functions
+//
+function logFrame(el){
+  console.log('w:', el.css('width'), 'h:', el.css('height'), 't:', el.css('top'), 'l:', el.css('left'));
+}
 
 //
 // Canvas is the main view container 
@@ -21,6 +27,8 @@ var VideoView = Backbone.View.extend({
   initialize: function(options) {
     this.width  = options.width;
     this.height = options.height;
+    this.left   = options.left;
+    this.top    = options.top;    
     this.src    = options.src;
   },
 
@@ -52,14 +60,22 @@ var VideoView = Backbone.View.extend({
   render: function() {
     this.$el.css({
       width:  this.width,
-      height: this.height
-    }).draggable()
-      .resizable();
+      height: this.height,
+      top:    this.top,
+      left:   this.left
+    });
+
+    this.$el.draggable({
+          stop: function() { logFrame($(this)); } 
+        })
+        .resizable({
+          stop: function() { logFrame($(this)); } 
+        });
 
     var self    = this;
     this.videoEl = $('<video>').attr({
       width:    '100%',
-      height:   '100%',
+      height:   '100%'
     });
 
     this.videoEl.append($('<source>').attr({
@@ -93,6 +109,8 @@ var ImageView = Backbone.View.extend({
   initialize: function(options) {
     this.width  = options.width;
     this.height = options.height;
+    this.left   = options.left;
+    this.top    = options.top;     
     this.src    = options.src;
   },
 
@@ -108,13 +126,19 @@ var ImageView = Backbone.View.extend({
   render: function() {
     this.$el.css({
       width:  this.width,
-      height: this.height
+      height: this.height,
+      top:    this.top,
+      left:   this.left
     });
 
     this.$el.html($('<img>').attr('src', this.src));
 
-    this.$el.draggable()
-            .resizable();
+    this.$el.draggable({
+              stop: function() { logFrame($(this)); } 
+            })
+            .resizable({
+              stop: function() { logFrame($(this)); } 
+            });
 
     return this;
   },
@@ -142,12 +166,16 @@ $(function(){
   var mainBoardVideo = new VideoView({
     width:  200,
     height: 200,
+    top:    300,
+    left:   300,
     src:    'videos/artboard5.mp4'
   });
 
   var mainBoardImage = new ImageView({
     width:  200,
     height: 200,
+    top:    600,
+    left:   600,    
     src:    'images/intro.svg'
   });
 
