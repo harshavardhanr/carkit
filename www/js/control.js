@@ -1,14 +1,9 @@
 $(function() {
-  // var socket = io.connect('http://' + window.location.host + ':8080');
-
   var socket = io.connect('http://' + window.location.host);
 
-
-  $('#play-video').on('click', function(){
-    socket.emit('video:play');
-  });
-
-  $('#switch-image').on('click', function(){
-    socket.emit('image:switch');
+  $('button').on('click', function(){
+    var state = $('select').val(); 
+    console.log('changing state to ', state);
+    socket.emit('state:change:' + state);
   });
 }); 

@@ -16,8 +16,17 @@ console.log('web server listening on port 8080...');
 
 // specify all events that should be relayed here
 var events = [
-  'video:play',
-  'image:switch'
+  'state:change:1',
+  'state:change:2',
+  'state:change:3',
+  'state:change:4',
+  'state:change:5',
+  'state:change:6',
+  'state:change:7',
+  'state:change:8',
+  'state:change:9',
+  'state:change:10',
+  'state:change:11'
 ];
 
 io.on('connection', function (socket) {

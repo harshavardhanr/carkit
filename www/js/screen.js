@@ -1,3 +1,7 @@
+
+//
+// Canvas is the main view container 
+//
 var Canvas = Backbone.View.extend({
   render: function() {
     return this;
@@ -8,6 +12,9 @@ var Canvas = Backbone.View.extend({
   }
 });
 
+//
+// VideoView plays a video
+//
 var VideoView = Backbone.View.extend({
   className: 'video-view',
 
@@ -17,6 +24,13 @@ var VideoView = Backbone.View.extend({
     this.src    = options.src;
   },
 
+  hide: function(){
+    this.$el.hide();
+  },
+
+  show: function(){
+    this.$el.show();
+  },
 
   play: function(){
     this.video.play();
@@ -24,6 +38,15 @@ var VideoView = Backbone.View.extend({
 
   pause: function(){
     this.video.pause();
+  },
+
+  setLoop: function(shouldLoop) {
+    if (shouldLoop){
+      this.videoEl.attr({loop: 'true'});  
+    }
+    else {
+      this.videoEl.removeAttr('loop');
+    }
   },
 
   render: function() {
@@ -34,18 +57,18 @@ var VideoView = Backbone.View.extend({
       .resizable();
 
     var self    = this;
-    var videoEl = $('<video>').attr({
-      width:  '100%',
-      height: '100%'
+    this.videoEl = $('<video>').attr({
+      width:    '100%',
+      height:   '100%',
     });
 
-    videoEl.append($('<source>').attr({
+    this.videoEl.append($('<source>').attr({
       src:  this.src, 
       type: 'video/mp4'
     }));
 
-    this.$el.append(videoEl);
-    this.video = videoEl.get(0);
+    this.$el.append(this.videoEl);
+    this.video = this.videoEl.get(0);
 
     this.video.addEventListener('ended', function(){
       self.trigger('ended');
@@ -59,6 +82,11 @@ var VideoView = Backbone.View.extend({
   }
 });
 
+
+
+//
+// ImageView displays an image
+//
 var ImageView = Backbone.View.extend({
   className: 'image-view',
 
@@ -67,6 +95,15 @@ var ImageView = Backbone.View.extend({
     this.height = options.height;
     this.src    = options.src;
   },
+
+  hide: function(){
+    this.$el.hide();
+  },
+
+  show: function(){
+    this.$el.show();
+  },
+
 
   render: function() {
     this.$el.css({
@@ -88,7 +125,9 @@ var ImageView = Backbone.View.extend({
   } 
 });
 
-
+//
+// Bootstrap code
+//
 $(function(){
   console.log('Initializing...');
 
@@ -96,40 +135,101 @@ $(function(){
     el: $('body')
   }).render();
 
-  var images = [
-    'images/image1.svg',
-    'images/image2.svg'
-  ];
+  // ------------------------------------
+  // Describe Behaviour here
+  // ------------------------------------
 
-  var currentImage = 0;
-
-  var imageView = new ImageView({
+  var mainBoardVideo = new VideoView({
     width:  200,
     height: 200,
-    src:    images[0]
+    src:    'videos/artboard5.mp4'
   });
 
-  var videoView = new VideoView({
+  var mainBoardImage = new ImageView({
+    width:  200,
+    height: 200,
+    src:    'images/intro.svg'
+  });
+
+  var gbIndicatorVideo = new VideoView({
     width:  300,
     height: 300,
-    src:    'videos/small.mp4'
+    src:    'videos/rotcircle.mp4'
   });
 
-  canvas.addChild(imageView);
-  canvas.addChild(videoView);
+  var gbIndicatorImage = new ImageView({
+    width:  300,
+    height: 300,
+    src:    'images/gi-key.svg'
+  });
+
+  canvas.addChild(mainBoardImage);
+  canvas.addChild(mainBoardVideo);
+  canvas.addChild(gbIndicatorVideo);
+  canvas.addChild(gbIndicatorImage);
+
+  gbIndicatorVideo.setLoop(true);
 
   var socket = io.connect('http://localhost:8080');
 
-  socket.on('video:play', function (data) {
-    videoView.play();
-  });
+  function setState(state){
+
+    switch (state){
+      case 1:
+        gbIndicatorVideo.show();
+        gbIndicatorVideo.play();
+        gbIndicatorImage.show();
+        mainBoardImage.show();
+        mainBoardVideo.hide();
+        mainBoardImage.setSrc('images/intro.svg');
+        gbIndicatorImage.setSrc('images/gi-key.svg');      
+        break;
+
+      case 2:
+        gbIndicatorVideo.hide();
+        gbIndicatorImage.show();
+        mainBoardImage.show();
+        mainBoardImage.setSrc('images/intro.svg');
+        gbIndicatorImage.setSrc('images/gi-damages.svg');      
+        break;
+      case 3:
+
+        mainBoardImage.setSrc('images/drive-ready.svg');
+        gbIndicatorImage.hide();      
+        break;
+
+      case 4:
+        gbIndicatorVideo.hide();
+        gbIndicatorImage.hide();
+        mainBoardImage.hide();
+        mainBoardVideo.show();
+        mainBoardVideo.play();
+        break;
+
+      case 5:
+        break;
+      case 6:
+        break;
+    }
+
+  }
+
+  // setState(1);
+
+  for (var i = 1; i <= 11; i++){
+    (function (state) {
+      socket.on('state:change:' + state, function (){ 
+        console.log('Changing state to', state);
+        setState(state); 
+      });  
+    })(i)
+  }
+
+  
 
 
 
-  socket.on('image:switch', function (data) {
-    currentImage = (currentImage + 1) % images.length;
-    imageView.setSrc(images[currentImage]);
-  });
+
 
 
 });
