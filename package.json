@@ -1,13 +1,15 @@
 {
   "name": "carkit",
-  "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "version": "0.0.2",
+  "description": "Car Kit",
+  "author": "Barnaby & Harsha",
+  "repository": "https://github.com/hvr828/carkit.git",
   "dependencies": {
     "express": "^4.5.1",
     "socket.io": "^1.0.6",
     "gulp-handlebars": "^2.1.0",
-    "websocket": "^1.0.8"
+    "websocket": "^1.0.8",
+    "parse": "^1.2.19"
   },
   "devDependencies": {
     "gulp-coffee": "^1.4.2",

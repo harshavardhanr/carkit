@@ -4,8 +4,10 @@ var app              = express();
 var server           = http.Server(app);
 var io               = require('socket.io')(server);
 var WebSocketServer  = require('websocket').server;
+var Parse            = require('parse').Parse;
+var secure           = require("./secure");
 
-
+Parse.initialize(secure.application_id, secure.application_key);
 
 app.use(express.static(__dirname + '/www/'));
 server.listen(8080);
@@ -35,13 +37,11 @@ io.on('connection', function (socket) {
   console.log('new socket.io connection...');
   events.forEach(function(event){
     socket.on(event, function (data) {
-      console.log('socket.io recieved', event);
+      eventRecieved(event);
       socket.broadcast.emit(event);
     });  
   });
 });
-
-
 
 //
 // Vanilla WebSocket Server
@@ -77,3 +77,24 @@ wsServer.on('request', function(request) {
     });
 });
 
+function eventRecieved(event) {
+    console.log('socket.io recieved', event);
+    if (event == "state:change:5") {
+      sendPush();
+    };
+}
+
+function sendPush() {
+  Parse.Push.send({
+    channels: ["cars"],
+    data: {
+      alert: "Report any damages?"
+    }
+  }, {
+    success: function() {
+      console.log("push sent");
+    }, error: function(error) {
+      console.log("push failed");
+    }
+  });
+}
