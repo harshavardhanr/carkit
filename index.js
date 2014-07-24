@@ -5,6 +5,8 @@ var server           = http.Server(app);
 var io               = require('socket.io')(server);
 var WebSocketServer  = require('websocket').server;
 
+
+
 app.use(express.static(__dirname + '/www/'));
 server.listen(8080);
 
@@ -38,6 +40,7 @@ io.on('connection', function (socket) {
     });  
   });
 });
+
 
 
 //
